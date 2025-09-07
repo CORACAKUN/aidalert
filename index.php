@@ -4,7 +4,7 @@ include "db_connect.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
-    $password = md5($_POST['password']); // demo only
+    $password = hash("sha256", $_POST['password']); // now using SHA-256
 
     $sql = "SELECT * FROM admins WHERE username='$username' AND password='$password'";
     $result = $conn->query($sql);
@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
