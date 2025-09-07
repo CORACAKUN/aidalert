@@ -5,13 +5,13 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Admin Dashboard</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     body { overflow-x: hidden; }
@@ -35,6 +35,7 @@ if (!isset($_SESSION['admin'])) {
   </style>
 </head>
 <body>
+
 <!-- Sidebar -->
 <div class="sidebar">
   <h4 class="text-center text-white"><i class="fa fa-shield-alt"></i> AidAlert</h4>
@@ -47,45 +48,13 @@ if (!isset($_SESSION['admin'])) {
 
 <!-- Content Area -->
 <div class="content" id="content">
-  <p>Loading reports...</p>
+  <h2>Welcome, <?= $_SESSION['admin'] ?>!</h2>
+  <p>Select a menu item to get started.</p>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="maps.js"></script>
-<script>
-  $(document).ready(function () {
-    // Auto-load reports.php when dashboard first opens
-    $("#content").load("reports.php", function () {
-        // Initialize the map immediately
-        var map = L.map('map').setView([12.7036661, 123.9080896], 12);
+<script src="script.js"></script>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
 
-        // Load Bulan’s boundary GeoJSON
-        $.getJSON("geojson/bulan_boundary.geojson", function (data) {
-            var bulanBoundary = L.geoJSON(data, {
-                style: {
-                    color: "red",
-                    weight: 2,
-                    fillColor: "orange",
-                    fillOpacity: 0.3
-                }
-            }).addTo(map);
-
-            map.fitBounds(bulanBoundary.getBounds());
-        });
-
-        setTimeout(function () {
-            map.invalidateSize();
-        }, 200);
-    });
-});
-
-</script>
 </body>
 </html>
